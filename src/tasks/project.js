@@ -355,6 +355,12 @@ export default class ProjectTaskManager {
           type: ProjectTaskManager.type,
           task: maybeEnvTask('Monitor'),
         })
+      ),
+      vscode.commands.registerCommand('platformio-ide.generateCompileCommandsJSON', () =>
+        vscode.commands.executeCommand('workbench.action.tasks.runTask', {
+          type: ProjectTaskManager.type,
+          task: maybeEnvTask('generateCompileCommandsJSON'),
+        })
       )
     );
   }

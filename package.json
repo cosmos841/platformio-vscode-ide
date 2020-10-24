@@ -177,6 +177,11 @@
         "category": "PlatformIO"
       },
       {
+        "command": "platformio-ide.generateCompileCommandsJSON",
+        "title": "Generate compile_commands.json",
+        "category": "PlatformIO"
+      },
+      {
         "category": "PlatformIO Debug",
         "command": "platformio-debug.peripherals.updateNode",
         "title": "Update Value"
@@ -627,9 +632,10 @@
   "dependencies": {
     "fs-plus": "~3.1.1",
     "platformio-node-helpers": "~8.0.1",
-    "platformio-vscode-debug": "~1.2.12"
+    "platformio-vscode-debug": "~1.2.12",
+    "wepack": "^0.0.1"
   },
   "extensionDependencies": [
-    "ms-vscode.cpptools"
+    "llvm-vs-code-extensions.vscode-clangd"
   ]
 }

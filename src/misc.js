@@ -89,6 +89,41 @@ export async function warnAboutConflictedExtensions() {
   }
 }
 
+
+export async function warnAboutCompileCommandsJSON() {
+  let orange = vscode.window.createOutputChannel("Orange");
+  try {
+    let folderPath = vscode.workspace.rootPath;
+    orange.appendLine(folderPath);
+    await vscode.workspace.fs.stat(vscode.Uri.parse('file:' + folderPath + "/compile_commands.json", true));
+    return;
+  }
+  catch
+  {
+  const selectedItem = await vscode.window.showWarningMessage(
+    'No compile_commands.json in project root. Code completion will not work.',
+    { title: 'Fix it', isCloseAffordance: true },
+    { title: 'Silence warning', isCloseAffordance: false },
+  );
+  switch (selectedItem ? selectedItem.title : undefined) {
+    case 'Fix it':
+      orange.appendLine("generating");
+      vscode.commands.executeCommand('platformio-ide.generateCompileCommandsJSON').then(
+      );
+      break;
+    case 'Silence warning':
+      conflicted.forEach((ext) => {
+        vscode.commands.executeCommand(
+          'workbench.extensions.uninstallExtension',
+          ext.id
+        );
+      });
+      vscode.commands.executeCommand('workbench.action.reloadWindow');
+      break;
+  }
+}
+}
+
 export async function warnAboutInoFile(editor, stateStorage) {
   if (!editor || !editor.document || !editor.document.fileName) {
     return;

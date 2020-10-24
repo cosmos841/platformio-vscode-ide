@@ -96,6 +96,7 @@ class PlatformIOVSCodeExtension {
 
     misc.maybeRateExtension(this.stateStorage);
     misc.warnAboutConflictedExtensions();
+    misc.warnAboutCompileCommandsJSON();
     this.subscriptions.push(
       vscode.window.onDidChangeActiveTextEditor((editor) =>
         misc.warnAboutInoFile(editor, this.stateStorage)
@@ -267,7 +268,12 @@ class PlatformIOVSCodeExtension {
       ),
       vscode.commands.registerCommand('platformio-ide.upgradeCore', () =>
         this.pioTerm.sendText('platformio upgrade')
-      )
+      ),
+      vscode.commands.registerCommand('platformio-ide.generateCompileCommandsJSON', () =>
+      {
+        this.pioTerm.sendText('platformio run -t compiledb && ')
+      }
+      ),
     );
   }
 
